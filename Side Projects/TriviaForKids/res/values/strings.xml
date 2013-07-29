@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Trivia for Kids</string>
+    <string name="action_settings">Settings</string>
+    <string name="trueButton">Yes</string>
+    <string name="falseButton">False</string>
+    <string name="correctToast">Correct!</string>
+    <string name="incorrectToast">Incorrect!</string>
+    
+    <!-- Question set 1 -->
+    <string name="sky_color_q">The color of the sky is purple.</string>
+    <string name="bird_leg_q">A bird has two legs.</string>
+    <string name="monday_tuesday_q">Monday comes after Tuesday.</string>
+    <string name="elephant_skin_q">The color of an elephant\'s skin is grey.</string>
+    <string name="elmo_color_q">Elmo is red.</string>
+    <string name="cookie_monster_color">Cookie Monster is green.</string>
+    <string name="oscar_color">Oscar (from Sesame Street) is green.</string>
+    <string name="pigs_oink">Pigs go, \"Oink!\"</string>
+    <string name="cats_woof">Cats go, \"Woof!\"</string>
+    <string name="christmas_december">Christmas is in December.</string>
+    
+    <!-- Question set 2 -->
+    <string name="x_w">\'x\' comes before \'w\'</string>
+    <string name="seven_eight">7 comes after 8</string>
+    <string name="bird_chirp">Birds go \"Chirp!\"</string>
+    <string name="sheep_baah">Sheep go \"Baah!\"</string>
+    <string name="car_wheels">A car has two wheels.</string>
+    <string name="bike_wheels">A bike has two wheels.</string>
+    <string name="one_plus_one">1 + 1 = 2</string>
+    <string name="circle_round">A circle is round.</string>
+    <string name="firetruck_yellow">A firetruck is yellow.</string>
+    <string name="five_toes">A person has 5 toes on each foot.</string>
+
+</resources>
