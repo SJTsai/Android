@@ -1,5 +1,6 @@
 package com.simon.practice.triviaforkids;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import android.os.Bundle;
@@ -25,10 +26,8 @@ public class TriviaFragment extends Fragment {
     /* Regarding question sets and questions */
     private SparseArray<TFQuestion[]> mQuestionSets; // Holds different sets of questions
     private TFQuestion[] mQuestions; // Holds current set of question being used
-    private boolean[] mQuestionSetsUsed; // Indicates which sets have been used
-    private boolean[] mQuestionsUsed; // Indicates which questions in the current set have been used
-    private int mQuestionSetsRemaining; // Number of sets remaining
-    private int mQuestionsRemaining; // Number of questions remaining
+    private ArrayList<Integer> mQuestionSetsRemaining; // Number of sets remaining
+    private ArrayList<Integer> mQuestionsRemaining; // Number of questions remaining
     private TFQuestion mCurrentTFQuestion; // Current true/false question being displayed
 
     @Override
@@ -38,20 +37,20 @@ public class TriviaFragment extends Fragment {
         /* Get question sets from TFQuestionContainer */
         mQuestionSets = TFQuestionContainer.getInstance(getActivity()).getQuestionSets();
         
-        /* Set all sets as unused */
-        mQuestionSetsUsed = new boolean[mQuestionSets.size()];
-        
         /* Initialize number of sets remaining */
-        mQuestionSetsRemaining = mQuestionSets.size();
+        mQuestionSetsRemaining = new ArrayList<Integer>(mQuestionSets.size());
+        
+        /* Initialize ArrayList with possible sets numbers */
+        initializeRemainingSetsOrQuestions(mQuestionSetsRemaining, mQuestionSets.size());
         
         /* Get initial random set of questions */
         mQuestions = mQuestionSets.get(chooseRandomSet());
         
-        /* Set all questions as unused */
-        mQuestionsUsed = new boolean[mQuestions.length];
-        
         /* Initialize number of questions remaining */
-        mQuestionsRemaining = mQuestions.length;
+        mQuestionsRemaining = new ArrayList<Integer>(mQuestions.length);
+        
+        /* Initialize ArrayList with possible question numbers for the set */
+        initializeRemainingSetsOrQuestions(mQuestionsRemaining, mQuestions.length);
     }
 
     @Override
@@ -117,60 +116,39 @@ public class TriviaFragment extends Fragment {
     private int chooseRandomSet() {
         int setNumber = rand.nextInt(mQuestionSets.size());
         
-        while (checkSetNumberUsed(setNumber)) {
-            setNumber = rand.nextInt(mQuestionSets.size());
-        }
-        markSetUsed(setNumber);
-        mQuestionSetsRemaining--;
+        mQuestionSetsRemaining.remove(setNumber);
         return setNumber;
     }
     
     /* Chooses unused random question to use */
     private TFQuestion chooseRandomQuestion() {
-        int questionNumber = rand.nextInt(mQuestions.length);
+        int questionNumber = rand.nextInt(mQuestionsRemaining.size());
         
-        while (checkQuestionNumberUsed(questionNumber)) {
-            questionNumber = rand.nextInt(mQuestions.length);
-        }
         mCurrentTFQuestion = mQuestions[questionNumber]; // Set new current question
-        markQuestionUsed(questionNumber);
-        mQuestionsRemaining--;
+        mQuestionsRemaining.remove(questionNumber);
         return mCurrentTFQuestion;
-    }
-    
-    /* Marks set as used */
-    private void markSetUsed(int setNumber) {
-        mQuestionSetsUsed[setNumber] = true;
-    }
-    
-    /* Marks question as used */
-    private void markQuestionUsed(int questionNumber) {
-        mQuestionsUsed[questionNumber] = true;
-    }
-    
-    /* Checks if set number chosen is already used */
-    private boolean checkSetNumberUsed(int currentSetNumber) {
-        return mQuestionSetsUsed[currentSetNumber];
-    }
-    
-    /* Checks if question number chosen is already used */
-    private boolean checkQuestionNumberUsed(int currentQuestionNumber) {
-        return mQuestionsUsed[currentQuestionNumber];
     }
     
     /* Checks whether all sets have been used */
     private boolean allSetsUsed() {
-        return mQuestionSetsRemaining == 0;
+        return mQuestionSetsRemaining.isEmpty();
     }
     
     /* Checks whether all questions in a set have been used */
     private boolean allQuestionsUsed() {
-        return mQuestionsRemaining == 0;
+        return mQuestionsRemaining.isEmpty();
     }
     
     /* Display congratulatory screen */
     private void displayEndScreen() {
         
+    }
+    
+    /* Initialize either remaining set numbers or question numbers */
+    private void initializeRemainingSetsOrQuestions(ArrayList<Integer> list, int capacity) {
+        for (int i = 0; i < capacity; i++) {
+            list.add(i);
+        }
     }
 
 }
